@@ -1,3 +1,6 @@
 {
-  "extends": ["@44north"]
+  "extends": ["@44north"],
+  "rules": {
+    "react-hooks/exhaustive-deps": "off"
+  }
 }
