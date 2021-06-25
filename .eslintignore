@@ -1,0 +1,10 @@
+build
+coverage
+*.db
+*.log
+*.lock
+*.json
+docs
+node_modules
+public
+prettier.config.js
