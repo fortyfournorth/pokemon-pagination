@@ -1,6 +1,7 @@
 import React, { FC } from "react";
 import Head from "next/head";
 import { ClassNames } from "@44north/classnames";
+import { Button } from "./Button";
 
 const Layout: FC<{ title?: string }> = ({ children, title = "The Page!" }) => {
     const cellPadding = new ClassNames(["py-2", "px-4"]);
@@ -24,6 +25,7 @@ const Layout: FC<{ title?: string }> = ({ children, title = "The Page!" }) => {
                         "text-gray-900 dark:text-gray-200"
                     ])
                         .add(cellPadding)
+                        .add(["flex", "justify-between", "items-center"])
                         .list()}
                 >
                     <h1
@@ -36,6 +38,16 @@ const Layout: FC<{ title?: string }> = ({ children, title = "The Page!" }) => {
                     >
                         {title}
                     </h1>
+                    <div>
+                        <Button
+                            onClick={() => {
+                                alert("goto GraphQL");
+                                window.open("/api/graphql", "_blank");
+                            }}
+                        >
+                            GraphQL
+                        </Button>
+                    </div>
                 </header>
                 <section
                     className={new ClassNames([
