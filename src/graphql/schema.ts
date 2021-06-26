@@ -1,6 +1,24 @@
 import { gql } from "apollo-server-micro";
 import { PokemonAPIService } from "./PokemonService";
 
+/**
+ * This function returns the ID of a resource in the
+ * provided URL
+ * @param url the URL to pull the ID From.
+ * @returns the ID taken from the URL
+ */
+const parseIdFromURL = (url: string) =>
+    (url || "")
+        .replace(new RegExp("?.+$", "gi"), "")
+        .replace(new RegExp("https:\\/\\/", "gi"), "")
+        .split("/")
+        .filter((value) => value.length > 0)
+        .filter((value) => Number(value) === parseInt(value))
+        .reverse()[0];
+
+/**
+ * Generate the GraphQL Schema
+ */
 const typeDefs = gql`
     type Characteristics {
         id: ID
@@ -130,13 +148,9 @@ const typeDefs = gql`
     }
 `;
 
-const parseIdFromURL = (url: string) =>
-    (url || "")
-        .replace(new RegExp("https:\\/\\/", "gi"), "")
-        .split("/")
-        .filter((value) => value.length > 0)
-        .reverse()[0];
-
+/**
+ * Generate the GraphQL Resolvers
+ */
 const resolvers = {
     PokemonSprite: {
         dream_world_front_default: (parent) => {

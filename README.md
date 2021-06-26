@@ -19,6 +19,8 @@ The final application should not allow for invlid page numbers.
 
 -   [NextJS](https://nextjs.org/docs/getting-started)
 -   [KnexJS](http://knexjs.org/)
+-   [GraphQL](https://graphql.org/)
+-   [Apollo](https://www.apollographql.com/blog/apollo-client/next-js/next-js-getting-started/)
 -   [tailwindcss](https://tailwindcss.com/docs)
 -   [axios](https://www.npmjs.com/package/axios)
 -   [@44north/classnames](https://www.npmjs.com/package/@44north/classnames)

@@ -3,6 +3,11 @@ import axios from "axios";
 import { Button } from "./../components";
 import { ClassNames } from "@44north/classnames";
 
+/**
+ * Optional Setup to Use GraphQL API
+ */
+// import { useQuery, gql } from "@apollo/client";
+
 interface IRecordSet {
     /**
      * Name of the Pokemon
