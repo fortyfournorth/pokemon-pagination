@@ -5,10 +5,14 @@
   "author": "Christopher Vachon <cvachon@fortyfournorth.ca>",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev",
+    "dev": "yarn knex:latest && next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "knex:make": "knex migrate:make ",
+    "knex:latest": "knex migrate:latest ",
+    "knex:up": "knex migrate:up ",
+    "knex:down": "knex migrate:down "
   },
   "devDependencies": {
     "@44north/eslint-config": "^1.0.0",
@@ -38,8 +42,10 @@
     "@44north/classnames": "^0.1.0",
     "apollo-server-micro": "^2.25.2",
     "graphql": "^15.5.1",
+    "knex": "^0.95.6",
     "next": "^11.0.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "sqlite3": "^5.0.2"
   }
 }
