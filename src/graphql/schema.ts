@@ -9,7 +9,7 @@ import { PokemonAPIService } from "./PokemonService";
  */
 const parseIdFromURL = (url: string) =>
     (url || "")
-        .replace(new RegExp("?.+$", "gi"), "")
+        .replace(new RegExp("\\?.+$", "gi"), "")
         .replace(new RegExp("https:\\/\\/", "gi"), "")
         .split("/")
         .filter((value) => value.length > 0)
