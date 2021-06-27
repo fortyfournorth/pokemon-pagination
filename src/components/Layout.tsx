@@ -41,7 +41,6 @@ const Layout: FC<{ title?: string }> = ({ children, title = "The Page!" }) => {
                     <div>
                         <Button
                             onClick={() => {
-                                alert("goto GraphQL");
                                 window.open("/api/graphql", "_blank");
                             }}
                         >

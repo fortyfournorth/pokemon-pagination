@@ -145,6 +145,7 @@ const typeDefs = gql`
     type Query {
         pokemon(id: ID): Pokemon
         listPokemon(pageNo: Int, itemsPerPage: Int): [Pokemon]
+        countPokemon: Int
     }
 `;
 
@@ -294,6 +295,11 @@ const resolvers = {
                         )
                     );
                 });
+        },
+        countPokemon: (_, {}) => {
+            return new PokemonAPIService().callAPI("pokemon").then((recordSet) => {
+                return recordSet.count;
+            });
         }
     }
 };
