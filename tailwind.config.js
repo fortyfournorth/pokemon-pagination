@@ -11,6 +11,9 @@ module.exports = {
             },
             gridTemplateRows: {
                 layout: "auto 1fr auto"
+            },
+            maxWidth: {
+                layout: "1200px"
             }
         }
     },

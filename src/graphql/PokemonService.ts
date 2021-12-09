@@ -20,7 +20,7 @@ class PokemonAPIService {
     private dbTableName = "pokemon";
 
     /**
-     * Calls the Pokemon API to retreve data
+     * Calls the Pokemon API to retrieve data
      *
      * A Local Database Cache Layer is put in place to reduce
      * calls to the API and make the application more responsive

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Button, PokemonCard, ErrorBlock } from "./../components";
+import { Button, PokemonCard, ErrorBlock, SelectBox, Container } from "./../components";
 import { ClassNames } from "@44north/classnames";
 import { useQuery, gql } from "@apollo/client";
+
 import type { IPokemonRecord } from "./../types";
 
-const POKEMONQUERY = gql`
+const POKEMON_QUERY = gql`
     query GetPokemon($pageNo: Int, $itemsPerPage: Int) {
         listPokemon(pageNo: $pageNo, itemsPerPage: $itemsPerPage) {
             id
@@ -34,11 +35,11 @@ const POKEMONQUERY = gql`
 `;
 
 function Homepage() {
-    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+    const [itemsPerPage, setItemsPerPage] = useState<number>(12);
     const [pageNo, setPageNo] = useState<number>(1);
 
     const { data, loading, error, refetch } = useQuery<{ listPokemon: IPokemonRecord[] }>(
-        POKEMONQUERY,
+        POKEMON_QUERY,
         {
             variables: {
                 pageNo,
@@ -55,11 +56,13 @@ function Homepage() {
     }, [pageNo, itemsPerPage]);
 
     return (
-        <div className={new ClassNames(["flex", "flex-col", "gap-4"]).list()}>
+        <div className={new ClassNames(["flex", "flex-col", "space-y-4"]).list()}>
             {error && <ErrorBlock error={error} />}
 
             {loading ? (
                 <p>I am Loading...</p>
+            ) : (data?.listPokemon || []).length === 0 ? (
+                <ErrorBlock error={new Error("No Records Found")} />
             ) : (
                 <ul>
                     {data.listPokemon.map((record) => (
@@ -70,10 +73,25 @@ function Homepage() {
                 </ul>
             )}
 
-            <div className={new ClassNames(["flex", "gap-2", "items-center"]).list()}>
-                <Button onClick={() => setPageNo(pageNo - 1)}>Previous Page</Button>
-                <p>{pageNo}</p>
-                <Button onClick={() => setPageNo(pageNo + 1)}>Next Page</Button>
+            <div
+                className={new ClassNames([
+                    "flex",
+                    "justify-between items-center",
+                    "space-x-8"
+                ]).list()}
+            >
+                <div className={new ClassNames(["flex", "space-x-2", "items-center"]).list()}>
+                    <Button onClick={() => setPageNo(pageNo - 1)}>Previous Page</Button>
+                    <p>{pageNo}</p>
+                    <Button onClick={() => setPageNo(pageNo + 1)}>Next Page</Button>
+                </div>
+                <div>
+                    <SelectBox
+                        value={itemsPerPage}
+                        onChange={(value) => setItemsPerPage(Number(value))}
+                        options={[1, 3, 6, 9, 12, 24, 48]}
+                    />
+                </div>
             </div>
         </div>
     );
