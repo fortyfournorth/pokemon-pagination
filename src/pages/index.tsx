@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, PokemonCard, ErrorBlock, SelectBox, Container } from "./../components";
+import { Button, PokemonCard, ErrorBlock, SelectBox } from "./../components";
 import { ClassNames } from "@44north/classnames";
 import { useQuery, gql } from "@apollo/client";
 

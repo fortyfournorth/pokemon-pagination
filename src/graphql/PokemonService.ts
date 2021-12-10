@@ -1,6 +1,6 @@
 import axios from "axios";
 import knex from "knex";
-import { resolve as pathResolve } from "path";
+import { resolve as pathResolve, sep } from "path";
 
 /**
  * This Service is used to simply logic to call the
@@ -13,7 +13,7 @@ class PokemonAPIService {
     private db = knex({
         client: "sqlite3",
         connection: {
-            filename: pathResolve(process.env.PWD, "./pokemon.db")
+            filename: pathResolve(process.env.PWD, `.${sep}pokemon.db`)
         },
         useNullAsDefault: false
     });
