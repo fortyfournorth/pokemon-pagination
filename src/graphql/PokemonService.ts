@@ -13,7 +13,7 @@ class PokemonAPIService {
     private db = knex({
         client: "sqlite3",
         connection: {
-            filename: pathResolve(process.env.PWD, `.${sep}pokemon.db`)
+            filename: pathResolve(process.env.PWD || __dirname, `.${sep}pokemon.db`)
         },
         useNullAsDefault: false
     });
