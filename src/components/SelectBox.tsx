@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, Fragment } from "react";
+import React, { FC, useState, useEffect, Fragment, useRef } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 import { CheckIcon, SelectorIcon } from "@heroicons/react/solid";
 import ClassNames from "@44north/classnames";
@@ -16,7 +16,7 @@ const SelectBox: FC<{
     options: SelectBoxValueOption[];
 }> = ({ value, onChange, options = [], className = "" }) => {
     const [currentValue, setCurrentValue] = useState<SelectBoxValueType>(value);
-
+    const thisInput = useRef();
     useEffect(() => {
         setCurrentValue(value);
     }, [value]);
@@ -32,9 +32,22 @@ const SelectBox: FC<{
         }
     };
 
+    const isNearBottom = (): boolean => {
+        const maxHeightOfOptionList = 240;
+        if (thisInput && window !== undefined) {
+            const screenTwoThirds = window.innerHeight - window.innerHeight / 3;
+            const node: HTMLElement = thisInput.current;
+            const elemPos = node.getBoundingClientRect();
+
+            return elemPos.top + maxHeightOfOptionList > screenTwoThirds;
+        }
+
+        return false;
+    };
+
     return (
         <Listbox value={currentValue} onChange={onChange}>
-            <div className={new ClassNames("relative").list()}>
+            <div className={new ClassNames("relative").list()} ref={thisInput}>
                 <Listbox.Button
                     className={new ClassNames([
                         "relative w-full py-2 pl-3 pr-10 text-left bg-white text-gray-900 rounded-lg shadow-md cursor-default focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-75 focus-visible:ring-white focus-visible:ring-offset-orange-300 focus-visible:ring-offset-2 focus-visible:border-indigo-500 sm:text-sm"
@@ -59,16 +72,22 @@ const SelectBox: FC<{
                     leaveTo="opacity-0"
                 >
                     <Listbox.Options
-                        className={new ClassNames([
-                            "absolute w-full",
-                            "py-1 mt-1",
-                            "overflow-auto",
-                            "text-base sm:text-sm  bg-white text-gray-900",
-                            "rounded-md",
-                            "shadow-lg",
-                            "max-h-60",
-                            "ring-1 ring-black ring-opacity-5 focus:outline-none"
-                        ]).list()}
+                        className={({ open }) =>
+                            new ClassNames([
+                                "absolute right-0",
+                                "py-1 mt-1",
+                                "overflow-y-scroll",
+                                "text-base sm:text-sm  bg-white text-gray-900",
+                                "rounded-md",
+                                "shadow-lg",
+                                "max-h-60",
+                                "ring-1 ring-black ring-opacity-5 focus:outline-none"
+                            ])
+                                .add({
+                                    "bottom-12": open ? isNearBottom() : false
+                                })
+                                .list()
+                        }
                     >
                         {options.map(mapOptionToObject).map((opt) => (
                             <Listbox.Option
@@ -79,7 +98,7 @@ const SelectBox: FC<{
                                         "relative",
                                         "cursor-default",
                                         "select-none",
-                                        "py-2 pl-10 pr-4"
+                                        "py-2 pl-10 pr-12"
                                     ])
                                         .add({ "text-amber-900 bg-amber-100": active })
                                         .list()
