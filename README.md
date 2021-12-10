@@ -2,7 +2,27 @@
 
 Your Task is to create a a Nice Paginated List of Pokemon.
 
-The final application should not allow for invalid page numbers.
+## Criteria
+
+### User Story
+
+> As a `User`
+>
+> I want to be able to browse through pages of pokemon in a quick and organized fashion.
+
+### Acceptance Criteria
+
+-   Click on `Next` and `Previous` should navigate to the correct page
+-   A Block of available Page Numbers should be displayed
+-   The Current Page Number should be highlighted
+-   The Current Page Number should be centered in the List when appropriate
+    -   Page Numbers `1` and `2` should not be centered
+    -   Page Numbers `Max` and `Max - 1` should not be centered
+-   Invalid Page Numbers should not be displayed
+-   A Clicking on a Page Number should goto that Page in the List
+-   Changing the Items Per Page should Reset the list to Page 1
+-   System should only accept Valid Page Numbers from `1` to the max Page Number
+-   Invalid Page Numbers should produce an Error
 
 ## Expected Environment
 
@@ -40,6 +60,8 @@ We expect you to be working in a unix based environment (mac, linux, ubuntu, min
 -   [GraphQL](https://graphql.org/) - An Open Graph Based Web API
 -   [Apollo](https://www.apollographql.com/blog/apollo-client/next-js/next-js-getting-started/) - A Client Side GraphQL Library
 -   [tailwindcss](https://tailwindcss.com/docs) - A CSS Utility Framework
+-   [headlessui](https://headlessui.dev/) - A utility framework for common JavaScript Components
+-   [heroicons](https://heroicons.com/) - A Icon Library
 -   [axios](https://www.npmjs.com/package/axios) - A Client and Server Side XHR Request API Library
 -   [@44north/classnames](https://www.npmjs.com/package/@44north/classnames) - A Library for managing Class Names in React
 -   [PokeAPI](https://pokeapi.co/) - An online open source data API of Pokemon
