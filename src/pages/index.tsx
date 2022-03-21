@@ -56,7 +56,7 @@ function Homepage() {
     }, [pageNo, itemsPerPage]);
 
     return (
-        <div className={new ClassNames(["flex", "flex-col", "space-y-4"]).list()}>
+        <div className={new ClassNames(["flex", "flex-col", "space-y-4", "justify-center", "items-center", "py-4"]).list()}>
             {error && <ErrorBlock error={error} />}
 
             {loading ? (
@@ -64,10 +64,10 @@ function Homepage() {
             ) : (data?.listPokemon || []).length === 0 ? (
                 <ErrorBlock error={new Error("No Records Found")} />
             ) : (
-                <ul>
+                <ul className={new ClassNames("grid", "grid-cols-1", "lg:grid-cols-3", "gap-8").list()}>
                     {data.listPokemon.map((record) => (
                         <li key={record.id}>
-                            <PokemonCard data={record} />
+                            <PokemonCard data={record}/>
                         </li>
                     ))}
                 </ul>

@@ -14,7 +14,7 @@ export interface IPokemonRecord {
     sprites: {
         official_artwork_front_default: string;
     };
-    type: {
+    types: {
         name: string;
     }[];
     abilities: {
