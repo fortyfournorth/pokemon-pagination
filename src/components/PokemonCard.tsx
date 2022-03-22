@@ -1,42 +1,21 @@
 import { FC } from "react";
-import { ClassNames } from "@44north/classnames";
 import type { IPokemonRecord } from "./../types";
-
-const typeColors = {
-	normal: '#A8A77A',
-	fire: '#EE8130',
-	water: '#6390F0',
-	electric: '#F7D02C',
-	grass: '#7AC74C',
-	ice: '#96D9D6',
-	fighting: '#C22E28',
-	poison: '#A33EA1',
-	ground: '#E2BF65',
-	flying: '#A98FF3',
-	psychic: '#F95587',
-	bug: '#A6B91A',
-	rock: '#B6A136',
-	ghost: '#735797',
-	dragon: '#6F35FC',
-	dark: '#705746',
-	steel: '#B7B7CE',
-	fairy: '#D685AD',
-};
+import { POKEMON_TYPE_COLORS } from "./../utils";
 
 const PokemonCard: FC<{ data: IPokemonRecord; }> = ({
     data
 }) => {
     return (
         <div className="relative w-72 h-96 p-2 rounded-md drop-shadow-lg"
-        style={{backgroundColor: `${typeColors[data.types[0].name]}`}} >
+        style={{backgroundColor: `${POKEMON_TYPE_COLORS[data.types[0].name]}`}} >
             {/* POKEMON TYPE */}
             <div className="flex justify-around items-center rounded-xl h-10 border-2 drop-shadow-lg"
                 style={ data.types.length > 1 
-                    ? {background: `linear-gradient(90deg, ${typeColors[data.types[0].name]}, ${typeColors[data.types[1].name]})`} 
-                    : {backgroundColor: `${typeColors[data.types[0].name]}`}}>
+                    ? {background: `linear-gradient(90deg, ${POKEMON_TYPE_COLORS[data.types[0].name]}, ${POKEMON_TYPE_COLORS[data.types[1].name]})`} 
+                    : {backgroundColor: `${POKEMON_TYPE_COLORS[data.types[0].name]}`}}>
                 {
-                    data.types.map((type) =>
-                        <span className="capitalize text-xl px-4">{type.name}</span>
+                    data.types.map((type, i) =>
+                        <span key={i} className="capitalize text-xl px-4">{type.name}</span>
                     )
                 }
             </div>
@@ -78,16 +57,16 @@ const PokemonCard: FC<{ data: IPokemonRecord; }> = ({
                 <span className="text-md font-bold">{`Abilities:`}</span>
                 <div className="space-y-2 text-xs capitalize">
                     {
-                        data.abilities.map((ability) =>
+                        data.abilities.map((ability, i) =>
                             ability.is_hidden
-                                ? <div className="flex flex-row items-center space-x-1">
+                                ? <div key={i} className="flex flex-row items-center space-x-1">
                                     {/* HIDDEN ICON */}
                                     <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 stroke-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                                     </svg>
                                     <span className="text-white font-bold">{ability.name}</span>
                                     </div>
-                                : <span>{ability.name}</span>
+                                : <span key={i}>{ability.name}</span>
                         )
                     }
                 </div>

@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Button, PokemonCard, ErrorBlock, SelectBox } from "./../components";
+import { PokemonCard, ErrorBlock, SelectBox, Pagination } from "./../components";
 import { ClassNames } from "@44north/classnames";
 import { useQuery, gql } from "@apollo/client";
-
 import type { IPokemonRecord } from "./../types";
 
 const POKEMON_QUERY = gql`
@@ -31,6 +30,7 @@ const POKEMON_QUERY = gql`
                 is_hidden
             }
         }
+        countPokemon
     }
 `;
 
@@ -38,7 +38,12 @@ function Homepage() {
     const [itemsPerPage, setItemsPerPage] = useState<number>(12);
     const [pageNo, setPageNo] = useState<number>(1);
 
-    const { data, loading, error, refetch } = useQuery<{ listPokemon: IPokemonRecord[] }>(
+    const updateItemsPerPage = (amount: number): void => {
+        setItemsPerPage(amount)
+        setPageNo(1)
+    }
+    
+    const { data, loading, error, refetch } = useQuery<{ listPokemon: IPokemonRecord[], countPokemon: number }>(
         POKEMON_QUERY,
         {
             variables: {
@@ -56,43 +61,40 @@ function Homepage() {
     }, [pageNo, itemsPerPage]);
 
     return (
-        <div className={new ClassNames(["flex", "flex-col", "space-y-4", "justify-center", "items-center", "py-4"]).list()}>
-            {error && <ErrorBlock error={error} />}
-
+        <div className={new ClassNames(["flex", "flex-col", "items-center", "space-y-4", "py-2"]).list()}>
+            {error && <ErrorBlock error={error}/>}
             {loading ? (
                 <p>I am Loading...</p>
             ) : (data?.listPokemon || []).length === 0 ? (
                 <ErrorBlock error={new Error("No Records Found")} />
             ) : (
-                <ul className={new ClassNames("grid", "grid-cols-1", "lg:grid-cols-3", "gap-8").list()}>
-                    {data.listPokemon.map((record) => (
-                        <li key={record.id}>
-                            <PokemonCard data={record}/>
-                        </li>
-                    ))}
-                </ul>
+                <div className={new ClassNames("space-y-4").list()}>
+                    <ul className={new ClassNames("grid", "grid-cols-1", "lg:grid-cols-3", "gap-8").list()}
+                        style={itemsPerPage === 1 ? {gridTemplateColumns: "1fr"} : {}}>
+                        {data.listPokemon.map((record) => (
+                            <li key={record.id}>
+                                <PokemonCard data={record}/>
+                            </li>
+                        ))}
+                    </ul>
+                    <div className={new ClassNames(
+                        "flex flex-col lg:flex-row justify-center items-center",
+                        "space-y-4 lg:space-y-0 space-x-2",
+                    ).list()}>
+                        <Pagination
+                            totalCount={data.countPokemon}
+                            itemsPerPage={itemsPerPage}
+                            pageNo={pageNo}
+                            setPageNo={setPageNo}>
+                        </Pagination>
+                        <SelectBox
+                            value={itemsPerPage}
+                            onChange={(value) => updateItemsPerPage(Number(value))}
+                            options={[1, 3, 6, 9, 12, 24, 48]}
+                        />
+                    </div>
+                </div>
             )}
-
-            <div
-                className={new ClassNames([
-                    "flex",
-                    "justify-between items-center",
-                    "space-x-8"
-                ]).list()}
-            >
-                <div className={new ClassNames(["flex", "space-x-2", "items-center"]).list()}>
-                    <Button onClick={() => setPageNo(pageNo - 1)}>Previous Page</Button>
-                    <p>{pageNo}</p>
-                    <Button onClick={() => setPageNo(pageNo + 1)}>Next Page</Button>
-                </div>
-                <div>
-                    <SelectBox
-                        value={itemsPerPage}
-                        onChange={(value) => setItemsPerPage(Number(value))}
-                        options={[1, 3, 6, 9, 12, 24, 48]}
-                    />
-                </div>
-            </div>
         </div>
     );
 }

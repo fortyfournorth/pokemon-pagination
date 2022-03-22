@@ -1,0 +1,1 @@
+export * from "./pokemon_type_colors";
