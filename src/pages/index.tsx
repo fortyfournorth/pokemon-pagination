@@ -12,11 +12,8 @@ const POKEMON_QUERY = gql`
             height
             weight
             species {
-                habitat {
-                    name
-                }
-                color {
-                    name
+                genera {
+                  	genus
                 }
             }
             sprites {
@@ -61,14 +58,14 @@ function Homepage() {
     }, [pageNo, itemsPerPage]);
 
     return (
-        <div className={new ClassNames(["flex", "flex-col", "items-center", "space-y-4", "py-2"]).list()}>
+        <div className={new ClassNames(["py-2"]).list()}>
             {error && <ErrorBlock error={error}/>}
             {loading ? (
                 <p>I am Loading...</p>
             ) : (data?.listPokemon || []).length === 0 ? (
                 <ErrorBlock error={new Error("No Records Found")} />
             ) : (
-                <div className={new ClassNames("space-y-4").list()}>
+                <div className={new ClassNames("space-y-4 flex flex-col items-center").list()}>
                     <ul className={new ClassNames("grid", "grid-cols-1", "lg:grid-cols-3", "gap-8").list()}
                         style={itemsPerPage === 1 ? {gridTemplateColumns: "1fr"} : {}}>
                         {data.listPokemon.map((record) => (

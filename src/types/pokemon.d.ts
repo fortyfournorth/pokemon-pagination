@@ -4,11 +4,8 @@ export interface IPokemonRecord {
     height: number;
     weight: number;
     species: {
-        habitat: {
-            name: string;
-        };
-        color: {
-            name: string;
+        genera: {
+            genus: string;
         };
     };
     sprites: {
