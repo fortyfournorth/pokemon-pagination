@@ -19,6 +19,10 @@ const POKEMON_QUERY = gql`
             sprites {
                 official_artwork_front_default
             }
+            stats {
+                name
+                base_stat
+            }
             types {
                 name
             }

@@ -11,6 +11,10 @@ export interface IPokemonRecord {
     sprites: {
         official_artwork_front_default: string;
     };
+    stats: {
+        name: string;
+        base_stat: number; 
+    }[];
     types: {
         name: string;
     }[];
