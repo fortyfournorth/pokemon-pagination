@@ -111,6 +111,11 @@ const typeDefs = gql`
         name: String
     }
 
+    type Genera {
+        id: ID
+        genus: String
+    }
+
     type Species {
         id: ID
         name: String
@@ -119,6 +124,7 @@ const typeDefs = gql`
         color: Color
         gender_rate: Int
         habitat: Habitat
+        genera: Genera
         has_gender_differences: Boolean
         hatch_counter: Int
         is_baby: Boolean
@@ -269,6 +275,10 @@ const resolvers = {
         },
         habitat: (parent) => {
             return new PokemonAPIService().callAPI(parent.habitat?.url);
+        },
+        genera: (parent) => {
+            const genusEnglish = parent.genera?.filter(genus => genus.language.name === "en")[0];
+            return genusEnglish ? genusEnglish : { genus : "Unknown Species" };
         }
     },
     Pokemon: {

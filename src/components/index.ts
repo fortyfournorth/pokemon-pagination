@@ -5,3 +5,4 @@ export * from "./Error";
 export * from "./Layout";
 export * from "./PokemonCard";
 export * from "./SelectBox";
+export * from "./Pagination";

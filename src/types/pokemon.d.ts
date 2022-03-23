@@ -4,17 +4,18 @@ export interface IPokemonRecord {
     height: number;
     weight: number;
     species: {
-        habitat: {
-            name: string;
-        };
-        color: {
-            name: string;
+        genera: {
+            genus: string;
         };
     };
     sprites: {
         official_artwork_front_default: string;
     };
-    type: {
+    stats: {
+        name: string;
+        base_stat: number; 
+    }[];
+    types: {
         name: string;
     }[];
     abilities: {
